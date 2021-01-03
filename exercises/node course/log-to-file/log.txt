@@ -1,0 +1,3 @@
+log
+{"id":"a64e47fc-5a63-4d09-b0e6-7759a6953801","msg":"Does this work"}
+{"id":"665dbbeb-1e62-4ac8-9994-2408e6d9334f","msg":"Jou"}
