@@ -1,12 +1,11 @@
 const express = require('express');
-const registration = require('../models/registration');
 const router = express.Router();
 const Registration = require('../models/registration')
 
 //all
 router.get('/', async (req, res) => {
 	try {
-		const registrations = await registration.find()
+		const registrations = await Registration.find()
 		res.json(registrations)
 	} catch {
 		res.status(500).json({msg: err.message})
@@ -14,15 +13,7 @@ router.get('/', async (req, res) => {
 })
 
 //one by id
-router.get('/:id', getRegistrationI, (req, res) => {
-	res.json(res.registration)
-})
-//one by license
-router.get('/:license', getRegistrationL, (req, res) => {
-	res.json(res.registration)
-})
-//Search all with a certain brand
-router.get('/:brand', getRegistrationB, (req, res) => {
+router.get('/:id', getRegistration, (req, res) => {
 	res.json(res.registration)
 })
 
@@ -43,13 +34,25 @@ router.post('/', async (req, res) => {
 	}
 })
 
-async function getRegistrationI(req, res, next){
+//update one
+
+//delete one
+router.delete('/:id',getRegistration, async (req, res) => {
 	try{
-		registration = await registration.findById(req.params.id)
+		await res.registration.remove()
+		res.json({msg: 'removed registration'})
+	}catch{
+		res.status(500).json({msg: err.message})
+	}
+})
+
+async function getRegistration(req, res, next){
+	try {
+		registration = await Registration.findById(req.params.id)
 		if (registration == null){
 			return res.status(404).json({msg: 'Cannot find registration'})
 		}
-	}catch (err){
+	} catch (err) {
 		return res.status(500).json({msg: err.message})
 	}
 
@@ -57,32 +60,5 @@ async function getRegistrationI(req, res, next){
 	next()
 }
 
-async function getRegistrationL(req, res, next){
-	try{
-		registration = await registration.findById(req.params.license)
-		if (registration == null){
-			return res.status(404).json({msg: 'Cannot find registration'})
-		}
-	}catch (err){
-		return res.status(500).json({msg: err.message})
-	}
-
-	res.registration = registration
-	next()
-}
-
-async function getRegistrationB(req, res, next){
-	try{
-		registrations = await registration.find().where(req.params.brand).in(ids).exec()
-		if (registration == null){
-			return res.status(404).json({msg: 'Cannot find registration'})
-		}
-	}catch (err){
-		return res.status(500).json({msg: err.message})
-	}
-
-	res.registration = registration
-	next()
-}
 
 module.exports = router
