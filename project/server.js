@@ -15,4 +15,4 @@ const registrationsRouter = require('./routes/registrations')
 app.use('/registrations', registrationsRouter)
 
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log('Server started'))
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`))

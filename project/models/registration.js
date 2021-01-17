@@ -5,6 +5,11 @@ const registrationSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	vehicleType: {
+		type: String,
+		required: true,
+		default: "Unspecified"
+	},
 	registrationDate: {
 		type: Date,
 		required: true,
