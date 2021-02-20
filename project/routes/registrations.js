@@ -18,10 +18,6 @@ router.get('/:id', getRegistration, (req, res) => {
 	res.json(res.registration)
 })
 
-//one by license
-router.get('/:license', getRegistrationL, (req, res) => {
-	res.json(res.registration)
-})
 
 //create
 router.post('/', async (req, res) => {
@@ -82,21 +78,5 @@ async function getRegistration(req, res, next){
 	res.registration = registration
 	next()
 }
-
-async function getRegistrationL(req, res, next){
-	try {
-		registration = await Registration.findById(req.params.license)
-		if (registration == null){
-			return res.status(404).json({msg: 'Cannot find registration'})
-		}
-	} catch (err) {
-		return res.status(500).json({msg: err.message})
-	}
-
-	res.registration = registration
-	next()
-}
-
-
 
 module.exports = router
