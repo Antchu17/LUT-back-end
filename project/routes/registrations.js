@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 
 //update one
 router.patch('/:id', getRegistration, async (req, res) => {
-	if (req.body.name != null) {
+	if (req.body.license != null) {
 		res.registration.license = req.body.license
 	}
 	if (req.body.vehicleType != null) {
